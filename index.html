@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quizzify — Interactive Quiz Platform for Students</title>
+  <meta name="description" content="Quizzify is a modern, interactive quiz platform that lets educators create engaging quizzes and students learn with instant feedback and scoring." />
+  <meta name="keywords" content="quiz app, interactive quiz, education, learning platform, student engagement" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>" />
+  <!-- GSAP Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader__spinner"></div>
+    <p class="loader__text">Crafting your classroom…</p>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="nav" id="mainNav">
+    <div class="container">
+      <a href="#" class="nav__logo" aria-label="Quizzify home">
+        <div class="nav__logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        Quizzify
+      </a>
+
+      <div class="nav__links" id="navLinks">
+        <a href="#features" class="nav__link">Features</a>
+        <a href="#how-it-works" class="nav__link">Journey</a>
+        <a href="#quiz-demo" class="nav__link">Try Quiz</a>
+        <a href="#testimonials" class="nav__link">Reviews</a>
+        <a href="#register" class="nav__cta">Get Started Free</a>
+        
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <div class="blob blob--1"></div>
+      <div class="blob blob--2"></div>
+      <div class="blob blob--3"></div>
+      <div class="hero__dots hero__dots--tl"></div>
+      <div class="hero__dots hero__dots--br"></div>
+    </div>
+
+    <div class="container">
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          Crafted for curious minds
+        </div>
+
+        <h1 class="hero__title">
+          Where Learning Feels Like <span>Magic</span>
+        </h1>
+
+        <p class="hero__subtitle">
+          Quizzify isn't just another quiz app. It's an <span class="handwritten" style="font-size:1.4rem;color:var(--terracotta-500);display:inline-block;transform:rotate(-2deg);margin:0 4px;">interactive journey</span> built to spark curiosity, reward progress, and make education feel human again.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#register" class="btn btn--primary">
+            Get Started Free
+            <span class="btn__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </a>
+          <a href="#quiz-demo" class="btn btn--secondary">
+            <span class="btn__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </span>
+            Try Interactive Demo
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <!-- Floating badges -->
+        <div class="hero__float hero__float--score">
+          <div class="hero__float-icon">🏆</div>
+          <div>
+            <div style="font-size:.75rem;color:var(--stone);font-weight:500;">Engagement</div>
+            <div>Top 1%</div>
+          </div>
+        </div>
+
+        <div class="hero__float hero__float--users">
+          <div class="hero__float-icon">🌱</div>
+          <div>
+            <div style="font-size:.75rem;color:var(--stone);font-weight:500;">Focus Level</div>
+            <div>Calm & Deep</div>
+          </div>
+        </div>
+
+        <!-- Preview Quiz Card -->
+        <div class="hero__card">
+          <div class="hero__card-header">
+            <span class="hero__card-tag">✨ Daily Challenge</span>
+            <span class="hero__card-step">Step 1 of 3</span>
+          </div>
+          <p class="hero__card-question">How does Quizzify make learning "unforgettable"?</p>
+          <div class="hero__card-options">
+            <div class="hero__card-option" data-answer="wrong">
+              <span class="option__marker">A</span> Boring Textbooks
+            </div>
+            <div class="hero__card-option" data-answer="correct">
+              <span class="option__marker">B</span> Interactive Feedback
+            </div>
+            <div class="hero__card-option" data-answer="wrong">
+              <span class="option__marker">C</span> Endless Exams
+            </div>
+            <div class="hero__card-option" data-answer="wrong">
+              <span class="option__marker">D</span> Generic Templates
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHY QUIZZIFY? ==================== -->
+  <section class="why-us section-pad" style="background:var(--sand-50);">
+    <div class="container">
+      <div class="features__header">
+        <p class="section__eyebrow">The Difference</p>
+        <h2 class="section__title">Why Choose Quizzify?</h2>
+        <p class="section__desc">We believe technology should amplify the human connection in teaching, not replace it.</p>
+      </div>
+
+      <div class="features__grid">
+        <div class="feature-card">
+          <h3 class="feature-card__title">Built for Humans</h3>
+          <p class="feature-card__desc">No cold interfaces. Every interaction is designed to feel warm, organic, and encouraging for students of all ages.</p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-card__title">Deep Insights</h3>
+          <p class="feature-card__desc">Don't just see a score. Understand *how* your students think with advanced behavioral analytics and progress tracking.</p>
+        </div>
+        <div class="feature-card">
+          <h3 class="feature-card__title">Instant Momentum</h3>
+          <p class="feature-card__desc">Create your first quiz in minutes. Our builder is so intuitive, it feels like it's reading your mind.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== HOW IT WORKS ==================== -->
+  <section class="how-it-works section-pad" id="how-it-works">
+    <div class="container">
+      <div class="features__header">
+        <p class="section__eyebrow">The Journey</p>
+        <h2 class="section__title">The When and How</h2>
+        <p class="section__desc">Whether you're in a classroom or a remote workshop, Quizzify fits perfectly.</p>
+      </div>
+
+      <div class="how-it-works__grid">
+        <div class="step-card">
+          <div class="step-card__icon">
+            <svg viewBox="0 0 100 100" width="60" height="60">
+              <circle cx="50" cy="50" r="40" fill="rgba(221,150,58,.1)" stroke="var(--sand-500)" stroke-width="2" />
+              <path d="M35 50 L45 60 L65 40" stroke="var(--sand-600)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            </svg>
+          </div>
+          <div class="step-card__number">01</div>
+          <h3 class="step-card__title">Set the Scene</h3>
+          <p class="step-card__desc">Register and define your goals. Are you teaching science or onboarding a team?</p>
+        </div>
+        <div class="step-card">
+          <div class="step-card__icon">
+            <svg viewBox="0 0 100 100" width="60" height="60">
+              <rect x="25" y="25" width="50" height="50" rx="8" fill="rgba(207,95,59,.1)" stroke="var(--terracotta-500)" stroke-width="2" />
+              <line x1="35" y1="40" x2="65" y2="40" stroke="var(--terracotta-500)" stroke-width="3" stroke-linecap="round" />
+              <line x1="35" y1="50" x2="55" y2="50" stroke="var(--terracotta-500)" stroke-width="3" stroke-linecap="round" />
+              <line x1="35" y1="60" x2="60" y2="60" stroke="var(--terracotta-500)" stroke-width="3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="step-card__number">02</div>
+          <h3 class="step-card__title">Craft the Experience</h3>
+          <p class="step-card__desc">Use our templates or start from scratch. Add images, hints, and custom feedback loops.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-card__icon">
+            <svg viewBox="0 0 100 100" width="60" height="60">
+              <path d="M20 80 Q50 20 80 80" fill="none" stroke="var(--olive-500)" stroke-width="2" />
+              <circle cx="80" cy="80" r="5" fill="var(--olive-600)" />
+              <polygon points="50,20 45,30 55,30" fill="var(--olive-600)" transform="rotate(15 50 20)" />
+            </svg>
+          </div>
+          <div class="step-card__number">03</div>
+          <h3 class="step-card__title">Launch & Engage</h3>
+          <p class="step-card__desc">Students join with a simple link. Watch them learn in real-time with zero friction.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-card__icon">
+            <svg viewBox="0 0 100 100" width="60" height="60">
+              <rect x="20" y="30" width="60" height="40" rx="4" fill="rgba(91,142,189,.1)" stroke="var(--info)" stroke-width="2" />
+              <path d="M30 60 L45 45 L55 53 L70 38" fill="none" stroke="var(--info)" stroke-width="3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="step-card__number">04</div>
+          <h3 class="step-card__title">Refine & Grow</h3>
+          <p class="step-card__desc">Use our deep analytics to improve your teaching and help students who need it most.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== INTERACTIVE QUIZ DEMO ==================== -->
+  <section class="quiz-demo section-pad" id="quiz-demo">
+    <div class="container">
+      <div class="quiz-demo__info reveal-left">
+        <p class="section__eyebrow">Try It Now</p>
+        <h2 class="section__title">Experience the Quiz Yourself</h2>
+        <p class="section__desc" style="margin-top:14px;">Don't just take our word for it. Answer a few questions and see how instant feedback makes learning feel rewarding.</p>
+
+        <div class="quiz-demo__features">
+          <div class="quiz-feature">
+            <div class="quiz-feature__icon" style="background:rgba(221,150,58,.12);color:var(--sand-600);">⚡</div>
+            <div class="quiz-feature__text">
+              <h4>Instant Feedback</h4>
+              <p>Know if you're right the moment you answer. No waiting.</p>
+            </div>
+          </div>
+          <div class="quiz-feature">
+            <div class="quiz-feature__icon" style="background:rgba(90,158,111,.12);color:var(--success);">📊</div>
+            <div class="quiz-feature__text">
+              <h4>Live Scoring</h4>
+              <p>Watch your score build up in real time as you progress.</p>
+            </div>
+          </div>
+          <div class="quiz-feature">
+            <div class="quiz-feature__icon" style="background:rgba(207,95,59,.1);color:var(--terracotta-500);">🎯</div>
+            <div class="quiz-feature__text">
+              <h4>Clear Results</h4>
+              <p>Get a summary with percentage and visual score bar at the end.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-panel reveal-right" id="quizPanel">
+        <!-- Progress -->
+        <div class="quiz-panel__progress">
+          <div class="quiz-panel__progress-bar">
+            <div class="quiz-panel__progress-fill" id="quizProgress" style="width:20%"></div>
+          </div>
+          <span class="quiz-panel__progress-text" id="quizStep">1 / 5</span>
+        </div>
+
+        <!-- Question -->
+        <div id="quizQuestionArea">
+          <p class="quiz-panel__question" id="quizQuestion"></p>
+          <div class="quiz-panel__options" id="quizOptions"></div>
+        </div>
+
+        <!-- Result (hidden initially) -->
+        <div class="quiz-result" id="quizResult">
+          <span class="quiz-result__emoji" id="resultEmoji"></span>
+          <h3 class="quiz-result__title" id="resultTitle"></h3>
+          <p class="quiz-result__score">You scored <span id="resultScore"></span></p>
+          <div class="quiz-result__bar">
+            <div class="quiz-result__bar-fill" id="resultBarFill" style="width:0%"></div>
+          </div>
+          <button class="quiz-result__restart" id="quizRestart">Play Again</button>
+        </div>
+
+        <!-- Footer -->
+        <div class="quiz-panel__footer" id="quizFooter">
+          <div class="quiz-panel__score">Score: <span id="quizScore">0</span></div>
+          <button class="quiz-panel__next" id="quizNext">Next →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TESTIMONIALS ==================== -->
+  <section class="testimonials section-pad" id="testimonials">
+    <div class="container">
+      <div class="features__header reveal">
+        <p class="section__eyebrow">What People Say</p>
+        <h2 class="section__title">Loved by Educators & Students Alike</h2>
+        <p class="section__desc">Real stories from people who transformed their classroom experience.</p>
+      </div>
+
+      <div class="testimonials__slider-container" id="testimonialSlider">
+        <div class="testimonials__slider">
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__text">"Quizzify completely changed how I assess my students. The instant feedback keeps them motivated and engaged like never before."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar">SR</div>
+              <div>
+                <div class="testimonial-card__name">Sarah Reynolds</div>
+                <div class="testimonial-card__role">High School Teacher</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__text">"I love taking quizzes on Quizzify! It's not boring like other platforms. The design is beautiful and the scoring feels like a game."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar" style="background:linear-gradient(135deg,var(--olive-500),var(--sand-400));">AK</div>
+              <div>
+                <div class="testimonial-card__name">Arjun Kumar</div>
+                <div class="testimonial-card__role">University Student</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__text">"Setting up quizzes took minutes instead of hours. The analytics dashboard helps me understand exactly where my students struggle."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar" style="background:linear-gradient(135deg,var(--terracotta-400),var(--sand-600));">MP</div>
+              <div>
+                <div class="testimonial-card__name">Maria Petrov</div>
+                <div class="testimonial-card__role">Professor, MIT</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Extra duplicate for seamless feel -->
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__text">"The mobile experience is flawless. My students can participate from anywhere, and the animations keep them focused."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar" style="background:var(--bark); color:white;">JL</div>
+              <div>
+                <div class="testimonial-card__name">James Lee</div>
+                <div class="testimonial-card__role">EdTech Consultant</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== REGISTRATION CTA ==================== -->
+  <section class="cta-section section-pad" id="register">
+    <div class="cta__blobs">
+      <div class="cta__blob cta__blob--1"></div>
+      <div class="cta__blob cta__blob--2"></div>
+    </div>
+
+    <div class="container">
+      <p class="section__eyebrow">Join Us</p>
+      <h2 class="section__title">Ready to Transform Your Classroom?</h2>
+      <p class="section__desc">Sign up for free and start creating your first quiz in under 2 minutes.</p>
+
+      <form class="cta__form" id="registerForm" autocomplete="off">
+        <div class="cta__form-row">
+          <input type="text" class="cta__input" placeholder="Full Name" id="regName" required />
+          <input type="email" class="cta__input" placeholder="Email Address" id="regEmail" required />
+        </div>
+        <input type="password" class="cta__input" placeholder="Create a Password" id="regPassword" required />
+        <button type="submit" class="cta__submit">Create My Free Account</button>
+        <p class="cta__note">No credit card required · Join 2,400+ educators</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="#" class="nav__logo" style="color:var(--sand-200);">
+            <div class="nav__logo-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            Quizzify
+          </a>
+          <p>Making learning engaging, interactive, and unforgettable. Built with care by educators, for educators.</p>
+        </div>
+
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#quiz-demo">Demo Quiz</a>
+          <a href="#">Pricing</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="#">Help Center</a>
+          <a href="#">Blog</a>
+          <a href="#">Templates</a>
+          <a href="#">API Docs</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="#">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2026 Quizzify. Crafted with warmth.</span>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+          </a>
+          <a href="#" class="footer__social" aria-label="GitHub">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+          <a href="#" class="footer__social" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast">
+    <div class="toast__icon">✓</div>
+    <span id="toastMessage">Registration successful!</span>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
